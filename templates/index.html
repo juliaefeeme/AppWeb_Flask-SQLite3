@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>App Gestor de Tareas</title>
+
+    <!--Bootstrap con plantilla-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@4.5.2/dist/sketchy/bootstrap.min.css" integrity="sha384-RxqHG2ilm4r6aFRpGmBbGTjsqwfqHOKy1ArsMhHusnRO47jcGqpIQqlQK/kmGy9R" crossorigin="anonymous">
+
+    <!--Fuente de Google Fonts-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap" rel="stylesheet">
+
+    <!--Hoja de estilo propia (main.css)-->
+    <link rel="stylesheet" href="{{url_for('static', filename='main.css')}}">
+</head>
+<body>
+
+    <main class="container p-4">
+        <h1 class="display-4 text-center mt-4 titulo">APP de Gestión de Tareas</h1>
+
+        <div class="row">
+            <div class="col-md-4 offset-md-4 my-auto"> <!--Este div ocupará 4 columnas del espacio (centrado)-->
+                <div class="card"> <!--Creacion del objeto card-->
+                    <div class="card-header">
+                        <form action="/crear-tarea" method="post">
+                            <div class="form-group">
+                                <input type="text" name="contenido-tarea" placeholder="Tarea" class="form-control" autofocus>
+                            </div>
+                            <button type="submit" class="btn btn-primary btn-block">
+                                Guardar
+                            </button>
+                        </form>
+                    </div>
+                    <div class="card-body">
+                        <ul> <!--Utilizamos Jinja ahora-->
+                            {% for tarea in lista_de_tareas %}
+                            <li>
+                                <span class="{% if tarea.hecha == 1 %} tarea_hecha {% endif %}">
+                                {{ tarea.contenido }}
+                                </span>
+                                <a href="/tarea-hecha/{{ tarea.id }}" style="text-decoration:none">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" fill="green" class="bi bi-check2-circle" viewBox="0 0 16 16">
+                                        <path d="M2.5 8a5.5 5.5 0 0 1 8.25-4.764.5.5 0 0 0 .5-.866A6.5 6.5 0 1 0 14.5 8a.5.5 0 0 0-1 0 5.5 5.5 0 1 1-11 0z"/>
+                                        <path d="M15.354 3.354a.5.5 0 0 0-.708-.708L8 9.293 5.354 6.646a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0l7-7z"/>
+                                    </svg>
+                                </a>
+                                <a href="/eliminar-tarea/{{ tarea.id }}" style="text-decoration:none">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" fill="red" class="bi bi-trash" viewBox="0 0 16 16">
+                                        <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
+                                        <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
+                                    </svg>
+                                </a>
+                            </li>
+                            {% endfor %}
+                        </ul>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+</body>
+</html>
